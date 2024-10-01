@@ -1,0 +1,117 @@
+{% load  static%}
+<!DOCTYPE HTML>
+<html>
+
+<head>
+<title>Assistant</title>
+<link rel="stylesheet" type="text/css" href="{% static '/style/style.css'%}" title="style" />
+<style>
+#customers {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#customers td, #customers th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#customers tr:nth-child(even){background-color: #f2f2f2;}
+
+#customers tr:hover {background-color: #ddd;}
+
+#customers th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #04AA6D;
+  color: white;
+}
+</style>
+</head>
+
+<body>
+	<div id="main">
+		<div id="header">
+			<div id="logo">
+				<div id="logo_text">
+					<!-- class="logo_colour", allows you to change the colour of the text -->
+					<h3>
+						<a href="#"><font color="white"><center>Personality Prediction</center></font></a>
+					</h3>
+					<br/><br/>
+				</div>
+			</div>
+			<div id="menubar">
+				<ul id="menu">
+
+                    {% if request.session.role in "admin" %}
+                        <li><a href="/addquestion">Post Question</a></li>
+                        <li><a href="/getquestions">Questions</a></li>
+                        <li><a href="/search">Search Profile</a></li>
+                        <li><a href="/logout">logout</a></li>
+                    {% endif %}
+
+                    {% if request.session.role in "user" %}
+                        <li><a href="/viewprofile">Profile</a></li>
+                        <li><a href="/getquestions">View Questions</a></li>
+                        <li><a href="/logout">logout</a></li>
+                    {% endif %}
+
+				</ul>
+			</div>
+		</div>
+		<div id="content_header"></div>
+		<div id="site_content">
+
+            <div id="content">
+				
+				<h1>Welcome to  <strong>{{request.session.username}}</strong>{{form.non_field_errors}}</h1>
+
+				<table id="customers">
+
+                    <tr>
+                        <th>Question ID</th>
+                        <th>Question</th>
+						<th>Type</th>
+
+                        {% if request.session.role in "admin" %}
+                                <th>Delete</th>
+                        {% endif %}
+
+                        {% if request.session.role in "user" %}
+                            <th>Answer</th>
+                        {% endif %}
+
+					</tr>
+
+					{% for question in questions %}
+
+                        <tr>
+
+                            <td>{{ question.id}}</td>
+                            <td>{{ question.question}}</td>
+                            <td>{{ question.type}}</td>
+
+                            {% if request.session.role in "admin" %}
+                                <td><a href="/deletequestion?question={{ question.id}}">Delete</a></td>
+                            {% endif %}
+
+                            {% if request.session.role in "user" %}
+                                {% if question.isanswered == "yes" %}
+                                    <td>Answered</td>
+                                {% elif question.isanswered == "no" %}
+                                    <td><a href="/answerquestion?question={{ question.id}}">Answer</a></td>
+                                {% endif %}
+                            {% endif %}
+					    </tr>
+
+					{% endfor %}
+  				</table>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
+

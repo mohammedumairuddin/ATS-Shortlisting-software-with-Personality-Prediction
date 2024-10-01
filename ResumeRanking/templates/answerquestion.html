@@ -1,0 +1,64 @@
+{% load  static%}
+<!DOCTYPE HTML>
+<html>
+
+<head>
+<title>Assistant</title>
+<link rel="stylesheet" type="text/css" href="{% static 'style/style.css'%}" title="style" />
+</head>
+
+<body>
+	<div id="main">
+		<div id="header">
+			<div id="logo">
+				<div id="logo_text">
+					<!-- class="logo_colour", allows you to change the colour of the text -->
+					<h3>
+						<a href="#"><font color="white"><center>Personality Prediction</center></font></a>
+					</h3>
+					<br/><br/>
+				</div>
+			</div>
+			<div id="menubar">
+				<ul id="menu">
+
+                    <li><a href="/viewprofile">Profile</a></li>
+                    <li><a href="/getquestions">View Questions</a></li>
+                    <li><a href="/logout">logout</a></li>
+
+				</ul>
+			</div>
+		</div>
+		<div id="content_header"></div>
+		<div id="site_content">
+			<div id="content">
+
+				<form name="form" action="/answerquestionaction/" method="post">
+
+                    {% csrf_token %}
+
+					<div class="form_settings">
+
+                        <input type="hidden" name="id" value="{{ question.id}}">
+
+						<p>
+							<span>Question :</span><textarea rows="" cols="" name="question">{{ question.question}}</textarea>
+						</p>
+
+                        <p>
+							<span>How much {{ question.type }} you are (select range between 1 to 8):</span><input type="number" name="score" min="1" max="8" required>
+						</p>
+
+						<p style="padding-top: 15px">
+							<span>&nbsp;</span><input class="submit" type="submit"
+								name="contact_submitted" value="Submit Answer"/>
+						</p>
+
+					</div>
+				</form>
+
+			</div>
+		</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,78 @@
+{% load  static%}
+<html>
+
+<head>
+<title>Voidmain</title>
+<link rel="stylesheet" type="text/css" href="{% static '/style/style.css'%}" title="style" />
+</head>
+<body>
+	<div id="main">
+		<div id="header">
+			<div id="logo">
+				<div id="logo_text">
+					<!-- class="logo_colour", allows you to change the colour of the text -->
+					<h3>
+						<a href="#"><font color="white"><center>Personality Prediction</center></font></a>
+					</h3>
+					<br/><br/>
+				</div>
+			</div>
+			<div id="menubar">
+				<ul id="menu">
+                    <li><a href="/addquestion">Post Question</a></li>
+                    <li><a href="/getquestions">Questions</a></li>
+                    <li><a href="/search">Search Profile</a></li>
+                    <li><a href="/logout">logout</a></li>
+
+				</ul>
+			</div>
+		</div>
+		<div id="content_header"></div>
+		<div id="site_content">
+
+			<div id="content">
+
+                <center><h1>Welcome to  <strong>{{request.session.username}}</strong>{{form.non_field_errors}}</h1></center>
+
+				<form name="form" action="/searchusers/" method="post">
+					{% csrf_token %}
+					<div class="form_settings">
+						<p>
+							<span>Enter Keywords</span><input class="contact" type="text"
+								name="keywords" required/>
+						</p>
+						<p style="padding-top: 15px">
+							<span>&nbsp;</span><input class="submit" type="submit"
+								name="contact_submitted" value="Search" />
+						</p>
+					</div>
+				</form>
+
+                <table style="width: 100%; border-spacing: 0;">
+
+                    <tr>
+						<td>Name</td>
+                        <td>Mobile</td>
+                        <td>Email</td>
+                        <td>Personality</td>
+                        <td>Download Resume</td>
+                        <td>Send Email</td>
+                    </tr>
+
+                    {% for user in users %}
+                        <tr>
+                            <td>{{user.name}}</td>
+                            <td>{{user.mobile}}</td>
+                            <td>{{user.email}}</td>
+                            <td>{{user.personality}}</td>
+                            <td><a href="/download?email={{ user.email }}">download</a></td>
+                            <td><a href="/sendemail?email={{ user.email }}">send mail</a></td>
+                        </tr>
+                    {% endfor %}
+
+  				</table>
+            </div>
+        </div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,71 @@
+{% load  static%}
+<!DOCTYPE HTML>
+<html>
+
+<head>
+<title>Assistant</title>
+<link rel="stylesheet" type="text/css" href="{% static 'style/style.css'%}" title="style" />
+</head>
+
+<body>
+	<div id="main">
+		<div id="header">
+			<div id="logo">
+				<div id="logo_text">
+					<!-- class="logo_colour", allows you to change the colour of the text -->
+					<h3>
+                        <a href="#"><font color="white"><center>Personality Prediction</center></font></a>
+					</h3>
+					<br/><br/>
+				</div>
+			</div>
+			<div id="menubar">
+				<ul id="menu">
+
+                    <li><a href="/addquestion">Post Question</a></li>
+                    <li><a href="/getquestions">Questions</a></li>
+                    <li><a href="/search">Search Profile</a></li>
+                    <li><a href="/logout">logout</a></li>
+
+				</ul>
+			</div>
+		</div>
+		<div id="content_header"></div>
+		<div id="site_content">
+			<div id="content">
+
+				<form name="form" action="/questionaction/" method="post">
+
+                    {% csrf_token %}
+
+					<div class="form_settings">
+
+						<p>
+							<span>Question :</span><textarea rows="" cols="" name="question"></textarea>
+						</p>
+
+						<p>
+							<span>Select Type:</span>
+                            <select name="type" required>
+                                <option value="">--select--</option>
+                                <option value="openness">openness</option>
+                                <option value="neuroticism">neuroticism</option>
+                                <option value="conscientiousness">conscientiousness</option>
+                                <option value="agreeableness">agreeableness</option>
+                                <option value="extraversion">extraversion</option>
+                            </select>
+						</p>
+
+						<p style="padding-top: 15px">
+							<span>&nbsp;</span><input class="submit" type="submit"
+								name="contact_submitted" value="Add Question"/>
+						</p>
+
+					</div>
+				</form>
+
+			</div>
+		</div>
+	</div>
+</body>
+</html>
